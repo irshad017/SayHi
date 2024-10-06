@@ -313,7 +313,7 @@ export const ChatRoom = () => {
                         <input
                             type="text"
                             placeholder="Search..."
-                            className={` w-16 sm:w-full text-sm sm:text-lg mb-4 py-1.5 sm:py-1.5 px-1 sm:px-3 border border-gray-600 ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all duration-300`}
+                            className={` w-16 sm:w-full text-sm sm:text-lg mb-4 py-2 sm:py-1.5 px-1 sm:px-3 border border-gray-600 ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all duration-300`}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)} // Update search term
                         />
