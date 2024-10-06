@@ -298,7 +298,7 @@ export const ChatRoom = () => {
                         </div>
                         <div className="ml-4">
                             {fetchUser ? (
-                                <h2 className="text-sm font-semibold">Loading...</h2>
+                                <h2 className="hidden sm:block text-sm font-semibold">Loading...</h2>
                             ) : (
                                 <>
                                     <h2 className="hidden sm:block text-sm font-semibold">{UserName?.split('@')[0]}</h2>
@@ -319,7 +319,7 @@ export const ChatRoom = () => {
                         />
                         <ul>
                             {fetched ? (
-                                <li className="text-center text-gray-500">Loading...</li>
+                                <li className=" text-center text-gray-500">Loading...</li>
                             ) : (
                                 filteredUsers.map((user, idx) => (
                                     <li
