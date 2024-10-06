@@ -92,7 +92,7 @@ export const ChatRoom = () => {
     useEffect(()=> {
         const FilteredUsers = allUsers.filter((user: FilterUserType) => 
             user.username.toLowerCase().includes(searchTerm.toLowerCase())
-        ).slice(0, 8); // Show only the first 8 users
+        ).slice(0, 11); // Show only the first 8 users
         setFilteredUsers(FilteredUsers)
     },[allUsers, searchTerm])
     // SELECT_USER TO CHAT
@@ -287,9 +287,15 @@ export const ChatRoom = () => {
                 <div className={`w-1/4 sm:w-full lg:w-1/3 p-4 rounded-xl shadow-2xl ${isNightMode ? 'bg-gray-800' : 'bg-gray-700'}`}>
                     {/* Profile */}
                     <div className="flex items-center p-2 mb-4">
-                        <img 
-                            src={url3}
-                            alt="User" className="w-10 h-10 rounded-full" />
+                        <div className="flex-col space-y-2">
+                            <img 
+                                src={url3}
+                                alt="User" className="w-10 h-10 rounded-full" />
+                            <>
+                                <h2 className="block sm:hidden text-sm font-semibold">{UserName?.split('@')[0]}</h2>
+                                {/* <p className="block sm:hidden text-xs">{UserName}</p> */}
+                            </>
+                        </div>
                         <div className="ml-4">
                             {fetchUser ? (
                                 <h2 className="text-sm font-semibold">Loading...</h2>
@@ -307,7 +313,7 @@ export const ChatRoom = () => {
                         <input
                             type="text"
                             placeholder="Search..."
-                            className={`w-full mb-4 p-3 border border-gray-600 ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all duration-300`}
+                            className={` w-16 sm:w-full mb-4 py-1.5 sm:py-2 px-1 sm:p-3 border border-gray-600 ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all duration-300`}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)} // Update search term
                         />
@@ -320,17 +326,23 @@ export const ChatRoom = () => {
                                         key={idx}
                                         // onClick={()=>HandelSelectUserToChat({username: user.username, ReceiverId: user.id})} 
                                         onClick={()=>HandelSelectUserToChat({username: user.username, ReceiverId: user.id})} 
-                                        className={`flex items-center p-2 hover:${isNightMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg cursor-pointer mb-2`}
+                                        className={`border-b-2 border-r  border-slate-200 dark:border-slate-700    flex items-center px-1 sm:px-2 py-1.5 sm:py-2 hover:${isNightMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg cursor-pointer mb-2`}
                                     >
                                         {/* {user.id} */}
                                         <FaUser className="hidden sm:block w-8 h-8 border-2 rounded-full bg-white text-black" />
                                         <span className="hidden sm:block ml-3">{user.username.slice(0,user.username.indexOf('@'))}</span>
-                                        <span className="block sm:hidden ml-2"> 
+                                        {/* <span className="block sm:hidden ml-2"> 
                                             {user.username.includes('@') ? user.username.slice(0, user.username.indexOf('@')) : user.username.slice(0, 5)}
+                                        </span> */}
+                                        <span className="block sm:hidden mx-1"> 
+                                            {user.username.includes('@') && user.username.slice(0, user.username.indexOf('@')).length < 8 ? user.username.slice(0, user.username.indexOf('@')) : `${user.username.slice(0,5)}..`}
+                                            
                                         </span>
+
                                     </li>
                                 ))
                             )}
+                            
                         </ul>
                     </div>
                     
