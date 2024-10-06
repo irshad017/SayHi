@@ -326,7 +326,7 @@ export const ChatRoom = () => {
                                         key={idx}
                                         // onClick={()=>HandelSelectUserToChat({username: user.username, ReceiverId: user.id})} 
                                         onClick={()=>HandelSelectUserToChat({username: user.username, ReceiverId: user.id})} 
-                                        className={`border-b-2 border-r  border-slate-200 dark:border-slate-700    flex items-center px-1 sm:px-2 py-1.5 sm:py-2 hover:${isNightMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg cursor-pointer mb-2`}
+                                        className={`border-b border-r-1  border-slate-200 dark:border-slate-700    flex items-center px-1 sm:px-2 py-1.5 sm:py-2 hover:${isNightMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg cursor-pointer mb-2`}
                                     >
                                         {/* {user.id} */}
                                         <FaUser className="hidden sm:block w-8 h-8 border-2 rounded-full bg-white text-black" />
