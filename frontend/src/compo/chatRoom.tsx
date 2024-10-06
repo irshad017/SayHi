@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { url3 } from "../assets/ImageURL";
-import { FaArrowLeft, FaSyncAlt, FaTrash,FaUser } from "react-icons/fa"; // Import the back arrow and user icons
+import { FaArrowLeft, FaSyncAlt, FaTrash, FaUser } from "react-icons/fa"; // Import the back arrow and user icons
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate, } from "react-router-dom";
@@ -33,9 +33,9 @@ export const ChatRoom = () => {
     const [fetched, setFetched] = useState(true);
     const [fetchUser, setFetchUser] = useState(true);
     const [allUsers, setAllUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(""); 
-    const [searchTerm, setSearchTerm] = useState(""); 
-    const [isNightMode, setIsNightMode] = useState(true); 
+    const [selectedUser, setSelectedUser] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isNightMode, setIsNightMode] = useState(true);
     const [filteredUsers, setFilteredUsers] = useState<FilterUserMap[]>([]);
     const navigate = useNavigate();
     // // SAVE FETCHED MESSAGES BETWEEN Those 2 users
@@ -44,40 +44,40 @@ export const ChatRoom = () => {
     // // SAVE Re-RENDERED FETCHED MESSAGES BETWEEN Those 2 users
     // const [NewPrevMsg, setNewPrevMsg] = useState([])
     // // Post new Message
-    const [newMsgPost,setNewMsgPost] = useState("")
+    const [newMsgPost, setNewMsgPost] = useState("")
     // // User LOgged
     // const UserLogged_ID = parseInt(localStorage.getItem('userId'), 10)
     const CHAT_ID = parseInt(localStorage.getItem('ChatId') || '-1', 10)
     const UserName = localStorage.getItem('username')
     // For Re-Render trigger Call condition
-    
+
     // // COunt
     const [Count, setCount] = useState(0)
     // // Hover name
     const [isCreatePostTooltipVisible, setIsCreatePostTooltipVisible] = useState(false);
     const [isCreatePostTooltipVisible2, setIsCreatePostTooltipVisible2] = useState(false);
     console.log("C_ID", CHAT_ID)
-    console.log("PrevMSGLength: ",PrevMsgLength)
-    console.log("PrevMSGs: ",PrevMsg)
-    
-    useEffect(()=>{
-        if(!CHAT_ID){
+    console.log("PrevMSGLength: ", PrevMsgLength)
+    console.log("PrevMSGs: ", PrevMsg)
+
+    useEffect(() => {
+        if (!CHAT_ID) {
             setPrevMsg([])
             setSelectedUser("Select User")
             console.log("Not Chat_id")
         }
-    },[CHAT_ID])
+    }, [CHAT_ID])
 
     useEffect(() => {
         const fetchUsers = async () => {
-            
+
             try {
                 const response = await axios.get(`${BACKEND_URL}/api/v1/user/getUsers`);
                 console.log("Fetched users:", response.data.users);
                 const usersData = response.data.users
                 const UserName = localStorage.getItem('username')
                 console.log("Set: ", usersData)
-                setAllUsers( usersData.filter( (data: DataType) => data.username != UserName) || []);
+                setAllUsers(usersData.filter((data: DataType) => data.username != UserName) || []);
                 setFetched(false); // Set to false once data is fetched
             } catch (error) {
                 console.error("Error fetching users:", error);
@@ -89,12 +89,12 @@ export const ChatRoom = () => {
         fetchUsers();
     }, []);
     // Filter users based on the search term
-    useEffect(()=> {
-        const FilteredUsers = allUsers.filter((user: FilterUserType) => 
+    useEffect(() => {
+        const FilteredUsers = allUsers.filter((user: FilterUserType) =>
             user.username.toLowerCase().includes(searchTerm.toLowerCase())
         ).slice(0, 11); // Show only the first 8 users
         setFilteredUsers(FilteredUsers)
-    },[allUsers, searchTerm])
+    }, [allUsers, searchTerm])
     // SELECT_USER TO CHAT
     //MESSAGING---------------------------
     const HandelSelectUserToChat = async ({ username, ReceiverId }: User_ReceiverID) => {
@@ -142,24 +142,24 @@ export const ChatRoom = () => {
     // // SEND MESSAGES
     const handleSendMessage = async () => {
         console.log("IN send msg")
-        if (newMsgPost === ""){
+        if (newMsgPost === "") {
             toast.error("message is blank! Can't send")
-            return 
+            return
         };
         const chatID = parseInt(localStorage.getItem('ChatId') || '0', 10)
-        const userID = parseInt(localStorage.getItem('UserId')  || '0', 10)
+        const userID = parseInt(localStorage.getItem('UserId') || '0', 10)
         console.log("chatID", chatID)
         console.log("userID", userID)
         if (!chatID || !userID) {
             console.log("User ID & ChatId not present in localStorage");
 
             toast.error("Select the User to Chat! ")
-            
+
             return;
         }
-        try{
+        try {
             console.log("IN ")
-            const response = await axios.post(`${BACKEND_URL}/api/v1/msg/sendMessage`,{
+            const response = await axios.post(`${BACKEND_URL}/api/v1/msg/sendMessage`, {
                 chatId: chatID,
                 senderId: userID,
                 content: newMsgPost
@@ -168,35 +168,35 @@ export const ChatRoom = () => {
             console.log("SenderMsg: ", response.data)
             setPrevMsg([...PrevMsg, Data.messageData]);
             setNewMsgPost("");
-        }catch(err){
+        } catch (err) {
             console.log("errOr in sendMsg: ", err)
         }
     }
     // // re-render to check any message came every second render
     useEffect(() => {
-        const intervalId = setInterval( () => {
+        const intervalId = setInterval(() => {
             const fetchLength = async () => {
-                try{
+                try {
                     const CHAT_ID2 = parseInt(localStorage.getItem('ChatId') || '0', 10)
-                    if(CHAT_ID2){
+                    if (CHAT_ID2) {
                         // console.log("ChatId present: ", CHAT_ID)
                         const response = await axios.get(`${BACKEND_URL}/api/v1/msg/chats/${CHAT_ID2}/messages`)
                         const length = response.data.length
                         // console.log("PrevMsg Length: ", PrevMsg.length )
                         // console.log("Render No: ",Count + 1)
                         console.log("Re-Render Msg_Length: ", length)
-                        if(length === PrevMsgLength){
+                        if (length === PrevMsgLength) {
                             console.log("No Changes in Msgs Array")
-                        }else{
+                        } else {
                             setPrevMsg(response.data)
-                            
+
                             setPrevMsgLength(length)
                         }
 
-                    }else{
+                    } else {
                         console.log("ChatId not present")
                     }
-                }catch(err){
+                } catch (err) {
                     console.log("erRor in Re_render Length: ", err)
                 }
                 setCount(Count => Count + 1)
@@ -214,57 +214,64 @@ export const ChatRoom = () => {
         // const ID = parseInt(MsgId, 10)
         const ChAtID = parseInt(localStorage.getItem("ChatId") || '0', 10)
         console.log("ChatId: ", ChAtID)
-        if(ChAtID && MsgId){
-            try{
-                const response = await axios.delete(`${BACKEND_URL}/api/v1/msg/chats/${ChAtID}/messages`,{
+        if (ChAtID && MsgId) {
+            try {
+                const response = await axios.delete(`${BACKEND_URL}/api/v1/msg/chats/${ChAtID}/messages`, {
                     data: {
                         id: MsgId
                     }
                 })
                 // console.log("Response: ", response.data)
                 toast.success(`${response.data.message}`)
-                const FilterDel = PrevMsg.filter( msg => msg.id !== MsgId)
+                const FilterDel = PrevMsg.filter(msg => msg.id !== MsgId)
                 setPrevMsg(FilterDel);
-                
-            }catch(err){
+
+            } catch (err) {
                 console.log("ErRor: ", err)
             }
-        }else{
+        } else {
             toast.error("ChatId or MsgId not present")
         }
     }
 
     const HandleRefresh = async () => {
-        try{
+        try {
             const CHAT_ID2 = parseInt(localStorage.getItem('ChatId') || '0', 10)
-            if(CHAT_ID2){
+            if (CHAT_ID2) {
                 const response = await axios.get(`${BACKEND_URL}/api/v1/msg/chats/${CHAT_ID2}/messages`)
                 const length = response.data.length
                 console.log("Re-Render Msg_Length: ", length)
-                if(length === PrevMsgLength){
+                if (length === PrevMsgLength) {
                     console.log("No Changes in Msgs Array")
                     toast.success("No Updates!")
-                }else{
+                } else {
                     setPrevMsg(response.data)
-                    
+
                     setPrevMsgLength(length)
                     const PrevLen = parseInt(PrevMsgLength, 10)
                     const diff = (length - PrevLen)
-                    console.log("Prev_l: ",PrevLen)
+                    console.log("Prev_l: ", PrevLen)
                     toast.success(`${diff} new message Updated!`)
                 }
                 setCount(Count + 1)
                 console.log("COunt: ", Count)
-            }else{
+            } else {
                 console.log("ChatId not present")
                 toast.error("Select a User to make Chat!")
             }
-        }catch(err){
+        } catch (err) {
             console.log("erRor in Re_render Length: ", err)
         }
     }
 
     return (
+        
+
+
+
+
+
+
         <div className={`flex flex-col h-screen ${isNightMode ? 'bg-gray-900 text-gray-200' : 'bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white'}`}>
             {/* Back Button */}
             <div className="flex justify-start items-center p-2">
@@ -419,5 +426,9 @@ export const ChatRoom = () => {
             </div>
             <Toaster />
         </div>
+
+
+
+
     );
 };
