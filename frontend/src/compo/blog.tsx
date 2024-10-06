@@ -69,7 +69,7 @@ export const BlogPage = () => {
             <Appbar />
             <div className="flex justify-center">
                 <div className="w-full max-w-screen-lg p-4"> {/* Change to max-w-screen-lg */}
-                    {blog.map((blogs,index) => (
+                    {blog.reverse().map((blogs,index) => (
                         <BlogsCard
                             key={index}
                             authorName={blogs.author.name || "Anonymous"}
