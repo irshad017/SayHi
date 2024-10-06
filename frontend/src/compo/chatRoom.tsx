@@ -222,7 +222,7 @@ export const ChatRoom = () => {
                     }
                 })
                 // console.log("Response: ", response.data)
-                toast.success(`${response.data.message} Id ${response.data.id}`)
+                toast.success(`${response.data.message}`)
                 const FilterDel = PrevMsg.filter( msg => msg.id !== MsgId)
                 setPrevMsg(FilterDel);
                 
