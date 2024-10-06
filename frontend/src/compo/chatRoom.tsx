@@ -267,41 +267,43 @@ export const ChatRoom = () => {
     return (
         <div className={`flex flex-col h-screen ${isNightMode ? 'bg-gray-900 text-gray-200' : 'bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white'}`}>
             {/* Back Button */}
-            <div className="flex justify-start items-center">
+            <div className="flex justify-start items-center p-2">
                 <button
                     onClick={() => navigate('/blogs')}
-                    className={`self-start p-2 m-4 ${isNightMode ? 'bg-gray-700' : 'bg-gray-300'} rounded-md hover:${isNightMode ? 'bg-gray-600 ' : 'bg-gray-400'} transition-all duration-300`}
+                    className={`p-2 ${isNightMode ? 'bg-gray-700' : 'bg-gray-300'} rounded-md hover:${isNightMode ? 'bg-gray-600 ' : 'bg-gray-400'} transition-all duration-300`}
                 >
                     <FaArrowLeft className="text-lg" />
                 </button>
+
                 {/* Toggle Night Mode Button */}
                 <button
                     onClick={() => setIsNightMode(!isNightMode)}
-                    className={`h-10 p-2 rounded-full ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-300 text-gray-800 font-bold'} transition-all duration-300`}>
+                    className={`h-10 p-2 rounded-full ml-auto ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-300 text-gray-800 font-bold'} transition-all duration-300`}>
                     {isNightMode ? 'Day Mode' : 'Night Mode'}
                 </button>
             </div>
 
-            <div className="flex flex-row w-full max-w-6xl mx-auto flex-grow gap-2 h-full">
+            <div className="flex flex-col sm:flex-row w-full max-w-6xl mx-auto flex-grow gap-2 h-full">
                 {/* Users List */}
-                <div className={`w-1/4 sm:w-full lg:w-1/3 p-4 rounded-xl shadow-2xl ${isNightMode ? 'bg-gray-800' : 'bg-gray-700'} h-full`}>
+                <div className={`sm:w-1/4 p-2 sm:p-4 rounded-xl shadow-2xl ${isNightMode ? 'bg-gray-800' : 'bg-gray-700'} sm:h-full`}>
                     {/* Profile */}
-                    <div className="border-b border-gray-600 flex items-center p-2 mb-3 sm:mb-4">
-                        <div className="flex-col space-y-0.5">
+                    <div className="border-b border-gray-600 flex items-center p-2 mb-3">
+                        <div className="flex flex-col items-center sm:flex-row space-y-2 sm:space-y-0">
                             <img
                                 src={url3}
-                                alt="User" className="w-10 h-10 rounded-full" />
-                            <h2 className="block sm:hidden text-sm font-semibold">{UserName?.split('@')[0]}</h2>
-                        </div>
-                        <div className="ml-4">
-                            {fetchUser ? (
-                                <h2 className="hidden sm:block text-sm font-semibold">Loading...</h2>
-                            ) : (
-                                <>
-                                    <h2 className="hidden sm:block text-sm font-semibold">{UserName?.split('@')[0]}</h2>
-                                    <p className="hidden sm:block text-xs">{UserName}</p>
-                                </>
-                            )}
+                                alt="User"
+                                className="w-10 h-10 rounded-full"
+                            />
+                            <div className="ml-4 text-center sm:text-left">
+                                {fetchUser ? (
+                                    <h2 className="text-sm font-semibold">Loading...</h2>
+                                ) : (
+                                    <>
+                                        <h2 className="text-sm font-semibold">{UserName?.split('@')[0]}</h2>
+                                        <p className="text-xs">{UserName}</p>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
 
@@ -310,11 +312,11 @@ export const ChatRoom = () => {
                         <input
                             type="text"
                             placeholder="Search..."
-                            className={`w-16 sm:w-full text-sm sm:text-lg mb-4 py-2 sm:py-1.5 px-1 sm:px-3 border border-gray-600 ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all duration-300`}
+                            className={`w-full text-sm sm:text-lg mb-4 py-2 px-3 border border-gray-600 ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all duration-300`}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <ul className="overflow-y-auto max-h-[70vh]">
+                        <ul className="overflow-y-auto max-h-[70vh] sm:max-h-[50vh]">
                             {fetched ? (
                                 <li className="text-center text-gray-500">Loading...</li>
                             ) : (
@@ -322,13 +324,10 @@ export const ChatRoom = () => {
                                     <li
                                         key={idx}
                                         onClick={() => HandelSelectUserToChat({ username: user.username, ReceiverId: user.id })}
-                                        className={`border-b border-slate-200 dark:border-slate-700 flex items-center px-1 sm:px-2 py-1.5 sm:py-2 hover:${isNightMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg cursor-pointer mb-2`}
+                                        className={`border-b border-slate-200 dark:border-slate-700 flex items-center px-2 py-2 hover:${isNightMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg cursor-pointer mb-2`}
                                     >
-                                        <FaUser className="hidden sm:block w-8 h-8 border-2 rounded-full bg-white text-black" />
-                                        <span className="hidden sm:block ml-3">{user.username.slice(0, user.username.indexOf('@'))}</span>
-                                        <span className="block sm:hidden mx-1">
-                                            {user.username.includes('@') && user.username.slice(0, user.username.indexOf('@')).length < 8 ? user.username.slice(0, user.username.indexOf('@')) : `${user.username.slice(0, 5)}..`}
-                                        </span>
+                                        <FaUser className="w-6 h-6 sm:w-8 sm:h-8 border-2 rounded-full bg-white text-black" />
+                                        <span className="ml-2 sm:ml-3 text-sm sm:text-base">{user.username.split('@')[0]}</span>
                                     </li>
                                 ))
                             )}
@@ -337,15 +336,15 @@ export const ChatRoom = () => {
                 </div>
 
                 {/* Messaging Section */}
-                <div className={`w-full lg:w-2/3 p-4 rounded-xl flex flex-col ${isNightMode ? 'bg-gray-800' : 'bg-white'} h-full`}>
+                <div className={`w-full sm:w-3/4 p-2 sm:p-4 rounded-xl flex flex-col ${isNightMode ? 'bg-gray-800' : 'bg-white'} h-full`}>
                     {/* Chat Header */}
                     <div className={`flex items-center justify-between border-b pb-2 mb-2 ${isNightMode ? 'border-gray-700' : 'border-gray-300'}`}>
                         <div className="flex items-center">
                             <img
                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQlVYQsJxbEDr57v18Wmwi2rXLOGQui08vHw&s"
-                                alt="User" className="border-2 border-black w-10 h-10 rounded-full" />
+                                alt="User" className="border-2 border-black w-8 h-8 rounded-full sm:w-10 sm:h-10" />
                             <div className="ml-4">
-                                <h2 className="text-sm font-semibold text-gray-300">{selectedUser?.split('@')[0] || "Select_User"}</h2>
+                                <h2 className="text-xs sm:text-sm font-semibold text-gray-300">{selectedUser?.split('@')[0] || "Select_User"}</h2>
                                 <p className="text-xs text-gray-500">{selectedUser || "Select_User"}</p>
                             </div>
                         </div>
@@ -354,106 +353,7 @@ export const ChatRoom = () => {
                             aria-label="Refresh"
                             onClick={HandleRefresh}
                         >
-                            <FaSyncAlt className="text-white h-6 w-6 cursor-pointer" />
-                        </button>
-                    </div>
-
-                    {/* Messages Section with Scroll */}
-                    <div className="flex-grow overflow-y-auto">
-                        {PrevMsg.map((msg) => {
-                            const isOwnMessage = msg.senderId === parseInt(localStorage.getItem('UserId') || '0', 10);
-
-                            return (
-                                <div className={`flex flex-col h-screen ${isNightMode ? 'bg-gray-900 text-gray-200' : 'bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white'}`}>
-            {/* Back Button */}
-            <div className="flex justify-start items-center">
-                <button
-                    onClick={() => navigate('/blogs')}
-                    className={`self-start p-2 m-4 ${isNightMode ? 'bg-gray-700' : 'bg-gray-300'} rounded-md hover:${isNightMode ? 'bg-gray-600 ' : 'bg-gray-400'} transition-all duration-300`}
-                >
-                    <FaArrowLeft className="text-lg" />
-                </button>
-                {/* Toggle Night Mode Button */}
-                <button
-                    onClick={() => setIsNightMode(!isNightMode)}
-                    className={`h-10 p-2 rounded-full ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-300 text-gray-800 font-bold'} transition-all duration-300`}>
-                    {isNightMode ? 'Day Mode' : 'Night Mode'}
-                </button>
-            </div>
-
-            <div className="flex flex-row w-full max-w-6xl mx-auto flex-grow gap-2 h-full">
-                {/* Users List */}
-                <div className={`w-1/4 sm:w-full lg:w-1/3 p-4 rounded-xl shadow-2xl ${isNightMode ? 'bg-gray-800' : 'bg-gray-700'} h-full`}>
-                    {/* Profile */}
-                    <div className="border-b border-gray-600 flex items-center p-2 mb-3 sm:mb-4">
-                        <div className="flex-col space-y-0.5">
-                            <img
-                                src={url3}
-                                alt="User" className="w-10 h-10 rounded-full" />
-                            <h2 className="block sm:hidden text-sm font-semibold">{UserName?.split('@')[0]}</h2>
-                        </div>
-                        <div className="ml-4">
-                            {fetchUser ? (
-                                <h2 className="hidden sm:block text-sm font-semibold">Loading...</h2>
-                            ) : (
-                                <>
-                                    <h2 className="hidden sm:block text-sm font-semibold">{UserName?.split('@')[0]}</h2>
-                                    <p className="hidden sm:block text-xs">{UserName}</p>
-                                </>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Chat List */}
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            className={`w-16 sm:w-full text-sm sm:text-lg mb-4 py-2 sm:py-1.5 px-1 sm:px-3 border border-gray-600 ${isNightMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition-all duration-300`}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <ul className="overflow-y-auto max-h-[70vh]">
-                            {fetched ? (
-                                <li className="text-center text-gray-500">Loading...</li>
-                            ) : (
-                                filteredUsers.map((user, idx) => (
-                                    <li
-                                        key={idx}
-                                        onClick={() => HandelSelectUserToChat({ username: user.username, ReceiverId: user.id })}
-                                        className={`border-b border-slate-200 dark:border-slate-700 flex items-center px-1 sm:px-2 py-1.5 sm:py-2 hover:${isNightMode ? 'bg-gray-600' : 'bg-gray-300'} rounded-lg cursor-pointer mb-2`}
-                                    >
-                                        <FaUser className="hidden sm:block w-8 h-8 border-2 rounded-full bg-white text-black" />
-                                        <span className="hidden sm:block ml-3">{user.username.slice(0, user.username.indexOf('@'))}</span>
-                                        <span className="block sm:hidden mx-1">
-                                            {user.username.includes('@') && user.username.slice(0, user.username.indexOf('@')).length < 8 ? user.username.slice(0, user.username.indexOf('@')) : `${user.username.slice(0, 5)}..`}
-                                        </span>
-                                    </li>
-                                ))
-                            )}
-                        </ul>
-                    </div>
-                </div>
-
-                {/* Messaging Section */}
-                <div className={`w-full lg:w-2/3 p-4 rounded-xl flex flex-col ${isNightMode ? 'bg-gray-800' : 'bg-white'} h-full`}>
-                    {/* Chat Header */}
-                    <div className={`flex items-center justify-between border-b pb-2 mb-2 ${isNightMode ? 'border-gray-700' : 'border-gray-300'}`}>
-                        <div className="flex items-center">
-                            <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQlVYQsJxbEDr57v18Wmwi2rXLOGQui08vHw&s"
-                                alt="User" className="border-2 border-black w-10 h-10 rounded-full" />
-                            <div className="ml-4">
-                                <h2 className="text-sm font-semibold text-gray-300">{selectedUser?.split('@')[0] || "Select_User"}</h2>
-                                <p className="text-xs text-gray-500">{selectedUser || "Select_User"}</p>
-                            </div>
-                        </div>
-                        <button
-                            className="bg-gray-700 text-white rounded-full p-2 transition-all duration-300 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-                            aria-label="Refresh"
-                            onClick={HandleRefresh}
-                        >
-                            <FaSyncAlt className="text-white h-6 w-6 cursor-pointer" />
+                            <FaSyncAlt className="text-white h-5 w-5 sm:h-6 sm:w-6 cursor-pointer" />
                         </button>
                     </div>
 
@@ -468,12 +368,12 @@ export const ChatRoom = () => {
                                         <img
                                             src="https://via.placeholder.com/40"
                                             alt="User"
-                                            className="w-8 h-8 rounded-full shadow-md mr-2"
+                                            className="w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-md mr-2"
                                         />
                                     )}
-                                    <div className={`max-w-xs md:max-w-sm rounded-t-xl p-3 text-white shadow-lg ${isOwnMessage ? 'rounded-l-xl bg-gradient-to-r from-blue-600 to-blue-700' : 'rounded-r-xl bg-gradient-to-r from-gray-500 to-gray-600'}`}>
-                                        <p className="break-words">{msg.content}</p>
-                                        <div className="flex items-center justify-between mt-2 text-sm text-gray-300">
+                                    <div className={`max-w-[75%] md:max-w-sm rounded-t-xl p-2 sm:p-3 text-white shadow-lg ${isOwnMessage ? 'rounded-l-xl bg-gradient-to-r from-blue-600 to-blue-700' : 'rounded-r-xl bg-gradient-to-r from-gray-500 to-gray-600'}`}>
+                                        <p className="break-words text-xs sm:text-sm">{msg.content}</p>
+                                        <div className="flex items-center justify-between mt-1 sm:mt-2 text-xs sm:text-sm text-gray-300">
                                             <span>
                                                 {typeof msg.timestamp === 'string'
                                                     ? new Date(msg.timestamp).toISOString().slice(11, 16)
@@ -486,7 +386,7 @@ export const ChatRoom = () => {
                                         <img
                                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQlVYQsJxbEDr57v18Wmwi2rXLOGQui08vHw&s"
                                             alt="User"
-                                            className="w-8 h-8 rounded-full shadow-md ml-2"
+                                            className="w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-md ml-2"
                                         />
                                     )}
                                 </div>
@@ -495,7 +395,7 @@ export const ChatRoom = () => {
                     </div>
 
                     {/* Input Box and Send Message */}
-                    <div className="mt-4 border-t pt-2 relative">
+                    <div className="mt-2 sm:mt-4 border-t pt-2 relative">
                         <input
                             value={newMsgPost}
                             onChange={(e) => setNewMsgPost(e.target.value)}
