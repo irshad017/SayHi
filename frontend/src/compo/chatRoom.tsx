@@ -286,8 +286,8 @@ export const ChatRoom = () => {
                 {/* Users List */}
                 <div className={`w-1/4 sm:w-full lg:w-1/3 p-4 rounded-xl shadow-2xl ${isNightMode ? 'bg-gray-800' : 'bg-gray-700'}`}>
                     {/* Profile */}
-                    <div className="flex items-center p-2 mb-4">
-                        <div className="flex-col space-y-2">
+                    <div className=" border-b border-gray-600 flex items-center p-2 mb-3 sm:mb-4">
+                        <div className="flex-col space-y-0.5">
                             <img 
                                 src={url3}
                                 alt="User" className="w-10 h-10 rounded-full" />
@@ -351,7 +351,7 @@ export const ChatRoom = () => {
                 {/* Messaging Section */}
                 <div className={`w-full lg:w-2/3 p-4 rounded-xl flex flex-col ${isNightMode ? 'bg-gray-800' : 'bg-white'}`}>
                     {/* Chat Header */}
-                    <div className={`flex items-center justify-between border-b pb-2 mb-2 ${isNightMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                    <div className={`flex items-center justify-between border-b pb-2 mb-2 ${isNightMode ? 'border-gray-700' : 'border-gray-300'}`}>
                         <div className="flex items-center">
                             <img 
                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQlVYQsJxbEDr57v18Wmwi2rXLOGQui08vHw&s"
