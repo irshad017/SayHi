@@ -97,9 +97,6 @@ The platform is designed like **Medium**, where users can post blogs, read blogs
 - **Enhanced UI**:
   - Stylish forms and buttons with animations for improved user experience.
 
-- **Weather UI Component**:
-  - Fetches and displays weather data in an appealing format.
-
 ## 🚀 Deployment
 
 - **Backend**: Deployed on **SQLPrisma Avion** database, utilizing **Hono** for the routing framework and **Prisma** for database management.
