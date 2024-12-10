@@ -1,6 +1,6 @@
 # SayHi - A Blogging and Chatting Platform
 
-Visit the live website: [SayHi](https://say-hi-kohl.vercel.app/)
+Visit the live website: [SayHi](https://say-hi-beta.vercel.app/)
 
 ## Project Overview
 
