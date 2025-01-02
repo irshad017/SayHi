@@ -106,8 +106,8 @@ The platform is designed like **Medium**, where users can post blogs, read blogs
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/project-name.git
-   cd project-name
+   git clone https://github.com/yourusername/sayhi.git
+   cd sayhi
    npm install
   Create a .env file and add the following variables:
   
